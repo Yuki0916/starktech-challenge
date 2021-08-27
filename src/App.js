@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useCallback } from 'react'
+import LaunchesList from './components/launchesList'
 
 function App() {
+  const [paginNumber, setPaginNumber] = useState(0)
+
+  const handlePrevPage = useCallback(() => {
+    setPaginNumber(prevNumber => prevNumber - 1)
+  }, [])
+
+  const handleNextPage = useCallback(() => {
+    setPaginNumber(prevNumber => prevNumber + 1)
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <LaunchesList value={paginNumber} />
+      {paginNumber > 0 && <div onClick={handlePrevPage}>prev page</div>}
+      <div>{paginNumber + 1}</div>
+      <div onClick={handleNextPage}>next page</div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
