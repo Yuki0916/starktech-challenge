@@ -23,7 +23,7 @@ export const GET_LAUNCHES_LIST = gql`
 `
 
 export const GET_NEXT_LAUNCH = gql`
-  {
+  query GetNextLaunch {
     launchNext {
       launch_date_local
       id

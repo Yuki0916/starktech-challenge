@@ -8,7 +8,6 @@ let cx = classnames.bind(Style)
 
 function App() {
   const [paginNumber, setPaginNumber] = useState(0)
-  const [refetch, setRefetch] = useState(false)
 
   const handlePrevPage = useCallback(() => {
     setPaginNumber(prevNumber => {
@@ -21,18 +20,10 @@ function App() {
     setPaginNumber(prevNumber => prevNumber + 1)
   }, [])
 
-  const handleRefetch = useCallback(() => {
-    setRefetch(prevSteate => !prevSteate)
-  }, [])
-
   return (
     <div className={Style['root']}>
       <NextLaunch />
-      <LaunchesList
-        value={paginNumber}
-        refetch={refetch}
-        handleRefetch={handleRefetch}
-      />
+      <LaunchesList value={paginNumber} />
       <div className={Style['pagination-container']}>
         <div
           className={cx({ 'pagination-disabled': paginNumber === 0 })}
