@@ -14,57 +14,23 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `yarn test`
+# About React GraphQL Challenge - SpaceX API
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- 利用 Apollo Client 組合出 launches list 以及 next launch 所需的資料
 
-### `yarn build`
+  1. 由於 launches list 有需要換頁的以及一次顯示十筆資料的需求，需要使用到參數`limit`以及`offset`
+  2. 發現其中資料有些不是一定有的，像是 detail 或是 link 相關資訊
+  3. pagination 的部分，發現組不出總頁數這塊資料，所以只顯示當下頁數
+  4.  發現同個參數若要向 api 進行資料更新，需要使用 refetch，雖然可以節省 requset 次數，但是在開發上就要更明確定義，refetch 的時機了。
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- 畫面元件相關
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  1. 利用 css-module 搭配 scss 進行 style 樣式撰寫
+  2. 將 launch 相關的元件擺放至 components 底下
+  3. 儘管使用 js 進行開發，元件 prop 型別若沒有明確定義好，eslint propTypes 會在 CRA compiler 階段直接跳至 error 畫面
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- 資料狀態管理
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  1. pagination 頁數資料建立在 App.js 中，與 launcheslist 元件共用
+  2. 藉由 graphQL fetch 到的資料皆在自己的元件底下進行儲存。(NextLaunch 以及 LaunchesList)
+  3. NextLaunch 有使用 React.memo，藉此避開 pagination value 更新時，進行 rerender 的行為
